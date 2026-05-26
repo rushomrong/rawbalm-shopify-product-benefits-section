@@ -1,0 +1,38 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="{{ settings.theme_color }}">
+
+    <title>{% if page_title %}{{ page_title }} - {% endif %}{{ shop.name }}</title>
+
+    
+    {{ 'custom-rusho.css' | asset_url | stylesheet_tag }}
+
+    {% if settings.favicon %}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {% endif %}
+
+</head>
+
+<body>
+    {% section 'header' %}
+
+    {% comment %} This function has been added to hide the cart drawer Kaching bundle "BUY 1" text {% endcomment %}
+    <script> 
+        document.addEventListener("DOMContentLoaded", function () {
+        const elements = document.querySelectorAll(".cart-drawer *");
+
+        elements.forEach(el => {
+            if (el.childNodes.length === 1) {
+            const text = el.textContent.trim();
+            if (text === "Buy 1") {
+                el.style.display = "none";
+            }
+            }
+        });
+        });
+        </script>
+  </body>
+</html>
