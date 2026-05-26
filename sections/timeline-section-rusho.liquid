@@ -1,0 +1,888 @@
+{% comment %}
+  Timeline Section - Rusho
+  Matches the wellness journey design with scroll-activated color fill
+{% endcomment %}
+
+<section class="timeline-section-rusho" id="tl-{{ section.id }}">
+  <div class="page-width-rusho">
+    <div class="journey-container-rusho journey-layout-rusho--{{ section.settings.layout_position }}">
+
+      {%- comment -%} Info Panel (Left/Right/Top) {%- endcomment -%}
+      <div class="content-column-rusho">
+        {%- if section.settings.brand_image != blank -%}
+          <img
+            src="{{ section.settings.brand_image | image_url: width: 500 }}"
+            alt="{{ section.settings.brand_image.alt | escape }}"
+            loading="lazy"
+            class="brand-image-rusho"
+          />
+        {%- endif -%}
+
+        {%- if section.settings.subtitle != blank -%}
+          <h3 class="highlight-text-rusho">{{ section.settings.subtitle }}</h3>
+        {%- endif -%}
+
+        {%- if section.settings.title != blank -%}
+          <h2 class="main-heading-rusho">{{ section.settings.title }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <p class="description-text-rusho">{{ section.settings.description }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_url }}" class="journey-button-rusho">
+            {{ section.settings.button_label }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.guarantee_text != blank -%}
+          <p class="prdoff-cta-note-rusho">
+            {%- if section.settings.guarantee_icon != blank -%}
+              <img
+                src="{{ section.settings.guarantee_icon | image_url: width: 100 }}"
+                alt="guarantee"
+                loading="lazy"
+              />
+            {%- endif -%}
+            {{ section.settings.guarantee_text }}
+          </p>
+        {%- endif -%}
+
+        {%- comment -%} Mobile CTA (hidden on desktop, shows only on mobile) {%- endcomment -%}
+        <div class="action-callout-rusho hide-desk">
+          {%- if section.settings.button_label != blank -%}
+            <a href="{{ section.settings.button_url }}" class="cta-button-rusho">
+              {{ section.settings.button_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Timeline Column (milestones) {%- endcomment -%}
+      <div class="timeline-column-rusho" id="tl-col-{{ section.id }}">
+        <div class="milestones-container-rusho" id="tl-milestones-{{ section.id }}">
+
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'milestone_item' -%}
+              <div
+                class="milestone-item-rusho"
+                id="tl-milestone-{{ section.id }}-{{ forloop.index0 }}"
+                data-milestone-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                <span class="timeline-dot-rusho" id="tl-dot-{{ section.id }}-{{ forloop.index0 }}"></span>
+                <span class="timeline-line-segment-rusho"></span>
+                <span class="timeline-line-progress-rusho" id="tl-progress-{{ section.id }}-{{ forloop.index0 }}"></span>
+
+                <div class="week-label-rusho" id="tl-label-{{ section.id }}-{{ forloop.index0 }}">
+                  {{ block.settings.step_title }}
+                </div>
+
+                <div class="bullet-list-rusho">
+                  <ul>
+                    {%- if block.settings.item_1 != blank -%}
+                      <li>{{ block.settings.item_1 }}</li>
+                    {%- endif -%}
+                    {%- if block.settings.item_2 != blank -%}
+                      <li>{{ block.settings.item_2 }}</li>
+                    {%- endif -%}
+                    {%- if block.settings.item_3 != blank -%}
+                      <li>{{ block.settings.item_3 }}</li>
+                    {%- endif -%}
+                  </ul>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ============================================
+     TIMELINE SECTION - RUSHO
+  ============================================ */
+
+  .timeline-section-rusho {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.background_color }};
+  }
+
+  .page-width-rusho {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .page-width-rusho {
+      padding: 0 5rem;
+    }
+  }
+
+  /* ---- Layout positioning ---- */
+  .journey-container-rusho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  /* Left: content on left, timeline on right (default) */
+  .journey-layout-rusho--left {
+    flex-direction: row;
+  }
+
+  /* Right: timeline on left, content on right */
+  .journey-layout-rusho--right {
+    flex-direction: row-reverse;
+  }
+
+  /* Top: content on top, timeline below */
+  .journey-layout-rusho--top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .journey-layout-rusho--top .content-column-rusho {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .journey-layout-rusho--top .timeline-column-rusho {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  /* ---- Content column (left/right/top) ---- */
+  .content-column-rusho {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    flex-shrink: 0;
+  }
+
+  .journey-layout-rusho--top .content-column-rusho {
+    width: 100%;
+  }
+
+  @media (min-width: 992px) {
+    .content-column-rusho {
+      position: sticky;
+      top: 70px;
+    }
+  }
+
+  .brand-image-rusho {
+    width: 100%;
+    max-width: 450px;
+    margin-bottom: 30px;
+    display: block;
+    border-radius: 8px;
+  }
+
+  /* Hide-desk and hide-mob utilities */
+  .hide-desk {
+    display: block !important;
+  }
+
+  .hide-mob {
+    display: block !important;
+  }
+
+  .highlight-text-rusho {
+    color: rgba(0, 147, 112, 1);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .main-heading-rusho {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 20px;
+    line-height: 1.3;
+    font-family: "Clash Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .description-text-rusho {
+    max-width: 467px;
+    margin-left: auto;
+    color: var(--Secondary-Black, #000);
+    text-align: center;
+    font-family: Satoshi, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 29px;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
+
+  .journey-button-rusho {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 20px;
+    font-weight: 500;
+    padding: 12px 32px;
+    border-radius: 6.94px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+    height: 62.4px;
+    max-width: 385px;
+    width: 100%;
+    font-family: "Clash Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  .journey-button-rusho:hover {
+    opacity: 0.88;
+    color: {{ section.settings.button_text_color }};
+  }
+
+  .prdoff-cta-note-rusho {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.6rem;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+  }
+
+  .action-callout-rusho {
+    display: none;
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .action-callout-rusho.hide-desk {
+    display: none !important;
+    margin-top: 50px;
+  }
+
+  .cta-button-rusho {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 20px;
+    font-weight: 500;
+    padding: 12px 32px;
+    border-radius: 6.94px;
+    text-decoration: none;
+    height: 62.4px;
+    max-width: 385px;
+    width: 100%;
+    font-family: "Clash Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: 0;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+  }
+
+  .cta-button-rusho:hover {
+    opacity: 0.88;
+    color: {{ section.settings.button_text_color }};
+  }
+
+  .cta-note-rusho {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+  }
+
+  .prdoff-cta-note-rusho img {
+    max-width: 17px;
+    height: auto;
+  }
+
+  p.cta-note-rusho img {
+    max-width: 14px;
+  }
+
+  /* ---- Timeline column ---- */
+  .timeline-column-rusho {
+    position: relative;
+    width: 50%;
+  }
+
+  .journey-layout-rusho--top .timeline-column-rusho {
+    width: 100%;
+  }
+
+  .milestones-container-rusho {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+  }
+
+  /* ---- Single milestone item ---- */
+  .milestone-item-rusho {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  /* Timeline dot */
+  .timeline-dot-rusho {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 16.65px;
+    height: 16.65px;
+    border-radius: 50%;
+    background: {{ section.settings.line_default_color }};
+    z-index: 2;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Active state (set by JS on scroll) */
+  .milestone-item-rusho.milestone-active-rusho .timeline-dot-rusho {
+    background: {{ section.settings.line_active_color }};
+  }
+
+  /* Black line segment (background line) */
+  .timeline-line-segment-rusho {
+    position: absolute;
+    left: 8px;
+    top: 22px;
+    pointer-events: none;
+    height: 100%;
+    width: 1.39px;
+    background: {{ section.settings.line_default_color }};
+  }
+
+  /* Green progress fill (overlays the black line) */
+  .timeline-line-progress-rusho {
+    position: absolute;
+    left: 6px;
+    top: 22px;
+    width: 4px;
+    pointer-events: none;
+    height: 0;
+    background: {{ section.settings.line_active_color }};
+    z-index: 1;
+    transition: height 0.15s linear;
+  }
+
+  /* Label (header bar — black by default, green when active) */
+  .week-label-rusho {
+    padding: 4px 37px;
+    border-radius: 6.94px;
+    color: white;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+    background: {{ section.settings.line_default_color }};
+    height: 48px;
+    display: flex;
+    align-items: center;
+    font-family: "Clash Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 17.278px;
+    font-weight: 500;
+    line-height: 24.98px;
+    text-transform: capitalize;
+  }
+
+  .milestone-item-rusho.milestone-active-rusho .week-label-rusho {
+    background: {{ section.settings.line_active_color }};
+  }
+
+  /* Bullet list */
+  .bullet-list-rusho {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: {{ section.settings.text_color }};
+  }
+
+  .bullet-list-rusho ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .bullet-list-rusho li {
+    font-weight: 400;
+    font-size: 19.43px;
+    line-height: 24.98px;
+    margin-bottom: 19px;
+    position: relative;
+    padding-left: 25px;
+  }
+
+  .bullet-list-rusho li:before {
+    content: "✓";
+    color: {{ section.settings.accent_color }};
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 19px;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 991px) {
+    .timeline-section-rusho {
+      padding-top: 0;
+      padding-bottom: 40px;
+    }
+
+    .journey-container-rusho {
+      flex-wrap: wrap;
+    }
+
+    .content-column-rusho {
+      width: 100%;
+      position: static !important;
+    }
+
+    .content-column-rusho > .brand-image-rusho {
+      margin-left: -20px;
+      margin-right: -20px;
+      display: inline-block;
+      max-width: none;
+      margin-bottom: 34px;
+      margin-top: 20px;
+    }
+
+    .main-heading-rusho {
+      margin-bottom: 10px;
+      margin-top: 5px;
+      color: var(--Secondary-Black, #000);
+      font-family: "Clash Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+    }
+
+    .description-text-rusho {
+      margin-bottom: 26px;
+      color: var(--Secondary-Black, #000);
+      text-align: center;
+      font-family: Satoshi, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%;
+    }
+
+    .highlight-text-rusho {
+      color: rgba(0, 147, 112, 1);
+    }
+
+    .journey-button-rusho {
+      display: none !important;
+    }
+
+    .prdoff-cta-note-rusho {
+      display: none !important;
+    }
+
+    .hide-mob {
+      display: none !important;
+    }
+
+    .timeline-column-rusho {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .milestones-container-rusho {
+      gap: 6px;
+    }
+
+    .week-label-rusho {
+      padding: 9px 27px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      height: 35px;
+      color: #FFF;
+      font-family: "Clash Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+    }
+
+    .bullet-list-rusho li {
+      margin-bottom: 14px;
+      color: var(--Secondary-Black, #000);
+      font-family: Satoshi, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%;
+      padding-left: 19px;
+    }
+
+    .bullet-list-rusho li:before {
+      width: 14px;
+      height: 14px;
+      left: 0;
+      top: 1px;
+      background-size: contain;
+    }
+@media (max-width: 991px) {
+    .action-callout-rusho.hide-desk {
+      display: none !important;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 15px;
+    }
+}    
+
+    .action-callout-rusho.hide-desk .cta-button-rusho {
+      color: #FFF;
+      text-align: center;
+      font-family: "Clash Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px !important;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+      letter-spacing: 0;
+    }
+  }
+
+  /* Link default styling */
+  a:not(:hover) {
+    text-decoration: none;
+  }
+</style>
+
+<script>
+(function () {
+  var sectionId = '{{ section.id }}';
+  var milestonesContainer = document.getElementById('tl-milestones-' + sectionId);
+  var timelineCol = document.getElementById('tl-col-' + sectionId);
+
+  if (!milestonesContainer) return;
+
+  var milestones = Array.from(milestonesContainer.querySelectorAll('.milestone-item-rusho'));
+  var dots = milestones.map(function (m) { return m.querySelector('.timeline-dot-rusho'); });
+  var labels = milestones.map(function (m) { return m.querySelector('.week-label-rusho'); });
+  var progresses = milestones.map(function (m) { return m.querySelector('.timeline-line-progress-rusho'); });
+
+  function onScroll() {
+    var wh = window.innerHeight;
+
+    milestones.forEach(function (milestone, i) {
+      var rect = milestone.getBoundingClientRect();
+      var midpoint = rect.top + rect.height / 2;
+
+      // Trigger when milestone reaches 75% down the viewport
+      var trigger = wh * 0.75;
+      var isActive = midpoint <= trigger;
+
+      if (isActive) {
+        milestone.classList.add('milestone-active-rusho');
+      } else {
+        milestone.classList.remove('milestone-active-rusho');
+      }
+    });
+
+    // Fill progress bars based on scroll position
+    milestones.forEach(function (milestone, i) {
+      if (!progresses[i]) return;
+
+      var rect = milestone.getBoundingClientRect();
+      var nextMilestone = milestones[i + 1];
+
+      if (!nextMilestone) {
+        // Last milestone — fill fully if active
+        if (milestone.classList.contains('milestone-active-rusho')) {
+          progresses[i].style.height = '103%';
+        } else {
+          progresses[i].style.height = '0';
+        }
+        return;
+      }
+
+      var nextRect = nextMilestone.getBoundingClientRect();
+      var currentMid = rect.top + rect.height / 2;
+      var nextMid = nextRect.top + nextRect.height / 2;
+      var distance = nextMid - currentMid;
+
+      var trigger = wh * 0.75;
+      var fillHeight = 0;
+
+      if (trigger >= nextMid) {
+        // Both past trigger — fully filled
+        fillHeight = 103;
+      } else if (trigger > currentMid) {
+        // Partially filled
+        fillHeight = ((trigger - currentMid) / distance) * 100;
+      }
+
+      progresses[i].style.height = fillHeight + '%';
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Timeline - Rusho",
+  "tag": "section",
+  "class": "timeline-section-rusho",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "select",
+      "id": "layout_position",
+      "label": "Info panel position",
+      "options": [
+        { "value": "left",  "label": "Left (default)" },
+        { "value": "right", "label": "Right" }
+      
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "line_default_color",
+      "label": "Line, dot & label — default (black)",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "line_active_color",
+      "label": "Line, dot & label — active fill (green)",
+      "default": "#4a7c59"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Checkmark color",
+      "default": "#4a7c59"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Main title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#4a7c59"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text color",
+      "default": "#374151"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#4a7c59"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Info Panel — Image & Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image",
+      "label": "Brand image"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Your Relief Journey"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main title",
+      "default": "with Miracle Balm"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Miracle Balm is designed to deliver real, lasting results, not just quick fixes. Here's how your legs may improve with consistent application:"
+    },
+    {
+      "type": "header",
+      "content": "Info Panel — Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Start My Journey →"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_icon",
+      "label": "Guarantee icon"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "60-day money back guarantee"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "milestone_item",
+      "name": "Timeline Milestone",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Milestone header"
+        },
+        {
+          "type": "text",
+          "id": "item_1",
+          "label": "Bullet point 1"
+        },
+        {
+          "type": "text",
+          "id": "item_2",
+          "label": "Bullet point 2"
+        },
+        {
+          "type": "text",
+          "id": "item_3",
+          "label": "Bullet point 3"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline - Rusho",
+      "settings": {
+        "subtitle": "Your Relief Journey",
+        "title": "with Miracle Balm",
+        "description": "Miracle Balm is designed to deliver real, lasting results, not just quick fixes. Here's how your legs may improve with consistent application:",
+        "button_label": "Start My Journey →",
+        "guarantee_text": "60-day money back guarantee",
+        "line_default_color": "#000000",
+        "line_active_color": "#4a7c59",
+        "accent_color": "#4a7c59",
+        "heading_color": "#000000",
+        "subtitle_color": "#4a7c59",
+        "text_color": "#374151",
+        "button_bg_color": "#4a7c59",
+        "button_text_color": "#ffffff",
+        "background_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "layout_position": "left"
+      },
+      "blocks": [
+        {
+          "type": "milestone_item",
+          "settings": {
+            "step_title": "Right Away: Discomfort Fades",
+            "item_1": "Pain eases, you can finally walk without wincing",
+            "item_2": "Uncomfortable feeling in legs goes away",
+            "item_3": "Your legs stop feeling like they're filled with cement"
+          }
+        },
+        {
+          "type": "milestone_item",
+          "settings": {
+            "step_title": "As You Continue: Swelling Decreases",
+            "item_1": "Your ankles don't look like water balloons by evening anymore",
+            "item_2": "You can get your shoes on without struggling or pain",
+            "item_3": "That constant tingling feeling becomes less frequent"
+          }
+        },
+        {
+          "type": "milestone_item",
+          "settings": {
+            "step_title": "Weeks Pass: Transformation Begins",
+            "item_1": "You don't have to explain to everyone why you're limping",
+            "item_2": "You can take the stairs instead of desperately hunting for elevators",
+            "item_3": "Those painful veins stop making you flinch when touched"
+          }
+        },
+        {
+          "type": "milestone_item",
+          "settings": {
+            "step_title": "Maintained Consistency: Freedom Becomes Normal",
+            "item_1": "You're not organizing your entire life around \"good leg days\"",
+            "item_2": "Summer doesn't mean months of hiding in long sleeves and pants",
+            "item_3": "Varicose veins stop stealing your confidence and joy"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
