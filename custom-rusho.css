@@ -6,6 +6,12 @@ Add your new file right after it:
 {{ 'custom-rusho.css' | asset_url | stylesheet_tag }}
 -->
 
+.product-page-price  {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px 0;
+}
+
 .product-page-price .price--on-sale .price-item--sale {
   font-size: 2.2rem !important;
   font-weight: 800 !important;
