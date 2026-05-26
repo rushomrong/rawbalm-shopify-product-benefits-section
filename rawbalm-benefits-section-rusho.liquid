@@ -6,8 +6,33 @@
 <!-- Product Title & Description -->
 <div class="rb-product-header">
 
+    <div class="rb-rating-row">
+  <span class="rb-stars" aria-label="Rated 4.8 out of 5">
+
+    <!-- Stars 1 to 4: fully filled -->
+    {% for i in (1..4) %}
+      <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#2d6a4f"/>
+      </svg>
+    {% endfor %}
+
+    <!-- Star 5: 80% filled (represents the 0.8 in 4.8) -->
+    <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="rb-star-partial">
+          <stop offset="80%" stop-color="#2d6a4f"/>
+          <stop offset="80%" stop-color="#d4e6d0"/>
+        </linearGradient>
+      </defs>
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="url(#rb-star-partial)"/>
+    </svg>
+
+  </span>
+  <span class="rb-rating-text">Rated 4.8 (14,278) Reviews</span>
+</div>
+
     {% comment %}
-  <!-- Star rating row -->
+  <!-- Old Star rating row -->
   <div class="rb-rating-row">
     <span class="rb-stars" aria-label="Rated 4.8 out of 5">
       {% for i in (1..5) %}
