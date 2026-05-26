@@ -1,0 +1,7 @@
+Find this line:
+
+{% if main_price != true or block.settings.displayed_badge == 'sale' %}
+
+And replace it with:
+
+{% if main_price != true or block.settings.displayed_badge == 'sale' or main_price == true %}
